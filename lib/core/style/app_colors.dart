@@ -2,29 +2,30 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   // Primary
-  static const Color mintGreen = Color(0xFFA8D5BA); // Primary brand color
-  static const Color sunnyYellow = Color(0xFFFFD93D); // Accent
+  static const Color primaryBg = Color(0xFF52473D);
+  static const Color primaryFont = Color(0xFF343434);
+  static const Color sunnyYellow = Color(0xFFFFD93D);
 
   // Secondary & Supporting
-  static const Color coralRed = Color(0xFFFF6B6B); // Warnings, highlights, fun
-  static const Color skyBlue = Color(0xFF5BC0EB); // Secondary playful color
-  static const Color softLavender = Color(0xFFB18AE0); // Friendly contrast
+  static const Color secondaryBg = Color(0xFFF9F1E9);
+  static const Color secondaryBorder = Color(0xFFBCBCBC);
 
-  // Neutrals
-  static const Color charcoalGray = Color(0xFF3A3A3A); // Main text
-  static const Color mediumGray = Color(0xFF7A7A7A); // Secondary text, icons
-  static const Color silverGray = Color(0xFFD9D9D9); // Borders, dividers
-  static const Color lightGray = Color(0xFFF5F5F5); // Card backgrounds
+  // Card Words
+  static const Color bgPronoun = Color(0xFFFFCFA2);
+  static const Color borderPronoun = Color(0xFFE28A2D);
+  static const Color bgUrgent = Color(0xFFFF8383);
+  static const Color borderUrgent = Color(0xFFFF1B1B);
+  static const Color bgRequest = Color(0xFFFFF5CC);
+  static const Color borderRequest = Color(0xFFFFD731);
+  static const Color bgEmotion = Color(0xFFBDA7FF);
+  static const Color borderEmotion = Color(0xFF6F3FFF);
+  static const Color bgActivity = Color(0xFFD4F4E2);
+  static const Color borderActivity = Color(0xFF40EB8B);
+  static const Color bgAction = Color(0xFFD5A990);
+  static const Color borderAction = Color(0xFF664F42);
+  static const Color bgLocation = Color(0xFFA3DFFA);
+  static const Color borderLocation = Color(0xFF5DCDFF);
 
-  // Optional Extras
-  static const Color limeGreen = Color(0xFF7ED957); // Success, positive actions
-  static const Color orangePeach = Color(0xFFFFA756); // Alternative accent
-
-  // Pastel Palette (for fun, non-core elements)
-  static const Color pastelPink = Color(0xFFFFC1CC);
-  static const Color pastelOrange = Color(0xFFFFD8B1);
-  static const Color pastelYellow = Color(0xFFFFF5B7);
-  static const Color pastelGreen = Color(0xFFB6E2D3);
-  static const Color pastelBlue = Color(0xFFAEC6FF);
-  static const Color pastelPurple = Color(0xFFD7BDE2);
+  static const Color bgSecondary = Color(0xFFFFFFFF);
+  static const Color borderSecondary = Color(0xFFBCBCBC);
 }
