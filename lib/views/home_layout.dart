@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:talkie_helpie/views/widgets/cards_layout.dart';
 import 'package:talkie_helpie/views/widgets/keyboard_layout.dart';
+import 'package:talkie_helpie/views/widgets/output_row.dart';
 import 'notifier/type_notifier.dart';
 
 class HomeLayout extends ConsumerWidget {
@@ -14,12 +15,7 @@ class HomeLayout extends ConsumerWidget {
     return Scaffold(
       body: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              Text("Baris tetap di atas"),
-            ],
-          ),
+          OutputRow(),
           Expanded(
             child: AnimatedSwitcher(
               duration: const Duration(milliseconds: 500),

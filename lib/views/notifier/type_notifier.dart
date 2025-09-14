@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 // Notifier untuk boolean
 class TypeNotifier extends Notifier<bool> {
   @override
-  bool build() => false; // default true (misal: keyboard)
+  bool build() => true;
 
   void toggle() => state = !state;
 }

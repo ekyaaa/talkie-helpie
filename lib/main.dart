@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
+import 'package:talkie_helpie/core/style/app_colors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:talkie_helpie/views/home_layout.dart';
 
@@ -26,12 +26,21 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
         fontFamily: 'ComicSans',
         textTheme: const TextTheme(
-          bodyLarge: TextStyle(color: Colors.black),
-          bodyMedium: TextStyle(color: Colors.black),
-          bodySmall: TextStyle(color: Colors.black),
+          bodyLarge: TextStyle(color: AppColors.primaryFont),
+        ),
+        textSelectionTheme: const TextSelectionThemeData(
+          cursorColor: AppColors.primaryFont,
+          selectionColor: AppColors.primaryFont,
+          selectionHandleColor: AppColors.primaryFont,
         ),
       ),
-      home: const HomeLayout(),
+      home: SafeArea(
+        top: false,
+        bottom: false,
+        left: true,
+        right: true,
+        child: const HomeLayout(),
+      ),
     );
   }
 }

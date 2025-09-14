@@ -15,8 +15,8 @@ class AppColors {
   static const Color borderPronoun = Color(0xFFE28A2D);
   static const Color bgUrgent = Color(0xFFFF8383);
   static const Color borderUrgent = Color(0xFFFF1B1B);
-  static const Color bgRequest = Color(0xFFFFF5CC);
-  static const Color borderRequest = Color(0xFFFFD731);
+  static const Color bgResponse = Color(0xFFFFF5CC);
+  static const Color borderResponse = Color(0xFFFFD731);
   static const Color bgEmotion = Color(0xFFBDA7FF);
   static const Color borderEmotion = Color(0xFF6F3FFF);
   static const Color bgActivity = Color(0xFFD4F4E2);
