@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../core/style/app_colors.dart';
-import '../notifier/keyboard_state.dart';
-import 'keyboard/current_text_review.dart';
-import 'keyboard/key_button.dart';
-import 'keyboard/recommendation_row.dart';
+import '../core/style/app_colors.dart';
+import 'notifier/keyboard_state.dart';
+import 'widgets/keyboard/current_text_review.dart';
+import 'widgets/keyboard/key_button.dart';
+import 'widgets/keyboard/recommendation_row.dart';
 
 class KeyboardLayout extends ConsumerWidget {
   const KeyboardLayout({super.key});

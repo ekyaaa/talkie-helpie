@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:talkie_helpie/views/notifier/full_text_provider.dart';
-
-import '../notifier/content_widget_notifier.dart';
+import '../core/style/app_colors.dart';
+import 'notifier/content_widget_notifier.dart';
+import 'notifier/type_notifier.dart';
 
 class OutputRow extends ConsumerWidget {
   const OutputRow({super.key});
@@ -29,6 +30,7 @@ class OutputRow extends ConsumerWidget {
                   ref.read(fullTextProvider.notifier).speak();
                 },
                 style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.secondaryBg,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -84,7 +86,9 @@ class OutputRow extends ConsumerWidget {
                                     ),
                                     Text(
                                       item.word!.word,
-                                      style: TextStyle(fontSize: screenHeight * 0.025),
+                                      style: TextStyle(
+                                        fontSize: screenHeight * 0.025,
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -132,6 +136,7 @@ class OutputRow extends ConsumerWidget {
                   ref.read(contentProvider.notifier).reset();
                 },
                 style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.secondaryBg,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -149,7 +154,10 @@ class OutputRow extends ConsumerWidget {
                     SizedBox(height: screenHeight * 0.0125),
                     Text(
                       'Bersihkan',
-                      style: TextStyle(fontSize: screenHeight * 0.02),
+                      style: TextStyle(
+                        fontSize: screenHeight * 0.02,
+                        color: AppColors.primaryFont,
+                      ),
                     ),
                   ],
                 ),
@@ -161,8 +169,10 @@ class OutputRow extends ConsumerWidget {
               child: ElevatedButton(
                 onPressed: () {
                   /// Swap mode
+                  ref.read(typeNotifierProvider.notifier).toggle();
                 },
                 style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.secondaryBg,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -173,14 +183,32 @@ class OutputRow extends ConsumerWidget {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Image.asset(
-                      'assets/icons/kartu.png',
-                      height: screenHeight * 0.05,
+                    AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 300),
+                      transitionBuilder: (child, animation) =>
+                          ScaleTransition(scale: animation, child: child),
+                      child: ref.watch(typeNotifierProvider) == false
+                          ? Icon(
+                              Icons.keyboard,
+                              color: AppColors.primaryBg,
+                              key: const ValueKey('keyboard'),
+                              size: screenHeight * 0.05,
+                            )
+                          : Image.asset(
+                              'assets/icons/kartu.png',
+                              key: const ValueKey('kartu'),
+                              height: screenHeight * 0.05,
+                            ),
                     ),
                     SizedBox(height: screenHeight * 0.0125),
                     Text(
-                      'Kartu',
-                      style: TextStyle(fontSize: screenHeight * 0.02),
+                      ref.watch(typeNotifierProvider) == false
+                          ? 'Keyboard'
+                          : 'Kartu',
+                      style: TextStyle(
+                        fontSize: screenHeight * 0.02,
+                        color: AppColors.primaryFont,
+                      ),
                     ),
                   ],
                 ),
@@ -194,6 +222,7 @@ class OutputRow extends ConsumerWidget {
                   /// Pengaturan (slide dari kanan)
                 },
                 style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.secondaryBg,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -211,7 +240,10 @@ class OutputRow extends ConsumerWidget {
                     SizedBox(height: screenHeight * 0.0125),
                     Text(
                       'Pengaturan',
-                      style: TextStyle(fontSize: screenHeight * 0.02),
+                      style: TextStyle(
+                        fontSize: screenHeight * 0.02,
+                        color: AppColors.primaryFont,
+                      ),
                     ),
                   ],
                 ),

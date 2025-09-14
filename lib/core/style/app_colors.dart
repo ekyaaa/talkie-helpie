@@ -10,6 +10,9 @@ class AppColors {
   static const Color secondaryBg = Color(0xFFF9F1E9);
   static const Color secondaryBorder = Color(0xFFBCBCBC);
 
+  // Aditional
+  static const Color thirdBg = Color(0xFFC0B0A4);
+
   // Card Words
   static const Color bgPronoun = Color(0xFFFFCFA2);
   static const Color borderPronoun = Color(0xFFE28A2D);

@@ -5,7 +5,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:talkie_helpie/core/models/word.dart';
 import 'package:talkie_helpie/core/data/word_object_list.dart';
 
-class ImageStorageNotifier extends AsyncNotifier<List<Word>> {
+class SelectedCardsNotifier extends AsyncNotifier<List<Word>> {
   File? _file;
 
   // Getter async
@@ -14,7 +14,7 @@ class ImageStorageNotifier extends AsyncNotifier<List<Word>> {
     if (_file != null) return _file!;
 
     final dir = await getApplicationDocumentsDirectory();
-    final f = File('${dir.path}/data/card_image_storage.json');
+    final f = File('${dir.path}/data/selected_cards_list.json');
 
     // Buat folder jika belum ada
     if (!await f.parent.exists()) {
@@ -51,7 +51,7 @@ class ImageStorageNotifier extends AsyncNotifier<List<Word>> {
     await f.writeAsString(jsonString);
   }
 
-  List<Word> _defaultWords() => defaultWordList;
+  List<Word> _defaultWords() => defaultWordList.take(43).toList();
 
   Future<void> addWord(Word word) async {
     final current = state.value ?? [];
@@ -92,5 +92,5 @@ class ImageStorageNotifier extends AsyncNotifier<List<Word>> {
   }
 }
 
-final imageStorageAsyncProvider =
-AsyncNotifierProvider<ImageStorageNotifier, List<Word>>(ImageStorageNotifier.new);
+final selectedCardsAsyncProvider =
+AsyncNotifierProvider<SelectedCardsNotifier, List<Word>>(SelectedCardsNotifier.new);

@@ -1,0 +1,103 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:talkie_helpie/core/services/selected_cards_service.dart';
+import 'package:talkie_helpie/core/style/app_colors.dart';
+import 'package:talkie_helpie/core/helper/card_color_picker.dart';
+
+import 'notifier/content_widget_notifier.dart';
+import 'notifier/full_text_provider.dart';
+
+class CardsLayout extends ConsumerWidget {
+  const CardsLayout({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final double screenHeight = MediaQuery
+        .of(context)
+        .size
+        .height;
+    final wordsAsync = ref.watch(selectedCardsAsyncProvider);
+
+    return Container(
+      decoration: const BoxDecoration(color: AppColors.secondaryBg),
+      child: wordsAsync.when(
+        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (err, stack) => Center(child: Text("Error: $err")),
+        data: (words) {
+          return GridView.builder(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 11, // 11 kolom
+              childAspectRatio: 79 / 70, // rasio w:h
+            ),
+            physics: const NeverScrollableScrollPhysics(),
+            padding: EdgeInsets.only(top: screenHeight * 0.02),
+            itemCount: 44,
+            itemBuilder: (context, index) {
+              if (index == words.length) {
+                return GestureDetector(
+                  onTap: () => debugPrint("Custom item ditekan"),
+                  child: Container(
+                    margin: const EdgeInsets.all(2),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: Colors.black54, width: 4),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.edit, size: screenHeight * 0.1),
+                        Text(
+                          'Edit',
+                          style: TextStyle(fontSize: screenHeight * 0.03),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              }
+
+              final word = words[index];
+
+              return GestureDetector(
+                onTap: () {
+                  ref.read(fullTextProvider.notifier).addWord(word.word, WordSeparator.space);
+                  ref.read(contentProvider.notifier).addWord(word);
+                },
+                child: Container(
+                  margin: const EdgeInsets.all(2),
+                  decoration: BoxDecoration(
+                    color: getCardBgColor(word.type),
+                    // nanti bisa ganti sesuai WordType
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(
+                      color: getCardBorderColor(word.type),
+                      width: 4,
+                    ),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      if (word.imgPath.isNotEmpty)
+                        Image.asset(word.imgPath, height: screenHeight * 0.1),
+                      Text(
+                        truncateWord(word.word, 9),
+                        style: TextStyle(fontSize: screenHeight * 0.03),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          );
+        },
+      ),
+    );
+  }
+}
+
+String truncateWord(String word, int maxLength) {
+  if (word.length <= maxLength) return word;
+  return '${word.substring(0, maxLength)}...';
+}
