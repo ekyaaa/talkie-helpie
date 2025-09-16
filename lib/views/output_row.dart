@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:talkie_helpie/views/notifier/full_text_provider.dart';
+import 'package:talkie_helpie/views/widgets/settings_modal.dart';
 import '../core/style/app_colors.dart';
 import 'notifier/content_widget_notifier.dart';
 import 'notifier/type_notifier.dart';
@@ -218,9 +219,7 @@ class OutputRow extends ConsumerWidget {
               height: screenHeight * 0.15,
               width: screenHeight * 0.15,
               child: ElevatedButton(
-                onPressed: () {
-                  /// Pengaturan (slide dari kanan)
-                },
+                onPressed: () => showSettingsModal(context),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.secondaryBg,
                   shape: RoundedRectangleBorder(
