@@ -53,13 +53,6 @@ class SelectedCardsNotifier extends AsyncNotifier<List<Word>> {
 
   List<Word> _defaultWords() => defaultWordList.take(43).toList();
 
-  Future<void> addWord(Word word) async {
-    final current = state.value ?? [];
-    final newList = [...current, word];
-    state = AsyncValue.data(newList);
-    await _saveJson(newList);
-  }
-
   Future<void> replaceWordInJson(Word newWord) async {
     final f = await file;
     final content = await f.readAsString();
@@ -74,12 +67,20 @@ class SelectedCardsNotifier extends AsyncNotifier<List<Word>> {
     }
 
     await f.writeAsString(jsonEncode(wordList.map((w) => w.toJson()).toList()));
+
+    state = AsyncValue.data(wordList);
   }
 
   Future<bool> wordExists(String query) async {
     final words = state.value ?? [];
 
     return words.any((w) => w.word.toLowerCase() == query.toLowerCase());
+  }
+
+  Future<bool> idExists(String query) async {
+    final words = state.value ?? [];
+
+    return words.any((w) => w.id.toLowerCase() == query.toLowerCase());
   }
 
   Future<Word> findWordExactOrFallback(String query) async {
@@ -89,6 +90,36 @@ class SelectedCardsNotifier extends AsyncNotifier<List<Word>> {
           (w) => w.word.toLowerCase() == query.toLowerCase(),
       orElse: () => Word(word: query, imgPath: '', id: '', type: WordType.emotion),
     );
+  }
+
+  Future<Word> findIdExactOrFallback(String query) async {
+    final words = state.value ?? [];
+
+    return words.firstWhere(
+          (w) => w.id.toLowerCase() == query.toLowerCase(),
+      orElse: () => Word(word: query, imgPath: '', id: '', type: WordType.emotion),
+    );
+  }
+
+  Future<void> deleteWordById(String id) async {
+    final f = await file;
+    final content = await f.readAsString();
+    List<dynamic> jsonList = content.isEmpty ? [] : jsonDecode(content);
+    List<Word> wordList = jsonList.map((e) => Word.fromJson(e)).toList();
+
+    final index = wordList.indexWhere((w) => w.id == id);
+    if (index != -1) {
+      // Ganti dengan placeholder tapi tetap pakai id lama
+      wordList[index] = Word(
+        word: '...',
+        type: WordType.placeholder,
+        id: id, // tetap pakai id lama
+        imgPath: 'assets/icons/default_card.png',
+      );
+
+      await f.writeAsString(jsonEncode(wordList.map((w) => w.toJson()).toList()));
+      state = AsyncValue.data(wordList);
+    }
   }
 }
 

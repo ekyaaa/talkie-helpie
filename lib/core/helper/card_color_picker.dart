@@ -2,6 +2,7 @@ import 'package:talkie_helpie/core/models/word.dart';
 import 'package:flutter/material.dart';
 import 'package:talkie_helpie/core/style/app_colors.dart';
 
+// Helper for getting card color based on WordType
 Color getCardBgColor(WordType type) {
   switch (type) {
     case WordType.pronoun:
@@ -18,6 +19,8 @@ Color getCardBgColor(WordType type) {
       return AppColors.bgAction;
     case WordType.location:
       return AppColors.bgLocation;
+    case WordType.placeholder:
+      return AppColors.bgSecondary;
     }
 }
 
@@ -37,5 +40,28 @@ Color getCardBorderColor(WordType type) {
       return AppColors.borderAction;
     case WordType.location:
       return AppColors.borderLocation;
+    case WordType.placeholder:
+      return AppColors.borderSecondary;
+  }
+}
+
+String getCardNameColor(WordType type) {
+  switch (type) {
+    case WordType.pronoun:
+      return 'Oranye';
+    case WordType.urgent:
+      return 'Merah';
+    case WordType.response:
+      return 'Kuning';
+    case WordType.emotion:
+      return 'Ungu';
+    case WordType.activity:
+      return 'Hijau';
+    case WordType.action:
+      return 'Coklat';
+    case WordType.location:
+      return 'Biru';
+    case WordType.placeholder:
+      return 'Pilih Warna';
   }
 }

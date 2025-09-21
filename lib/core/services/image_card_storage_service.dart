@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:talkie_helpie/core/models/word.dart';
@@ -54,10 +55,15 @@ class ImageStorageNotifier extends AsyncNotifier<List<Word>> {
   List<Word> _defaultWords() => defaultWordList;
 
   Future<void> addWord(Word word) async {
-    final current = state.value ?? [];
-    final newList = [...current, word];
-    state = AsyncValue.data(newList);
-    await _saveJson(newList);
+    final f = await file;
+    final content = await f.readAsString();
+    List<dynamic> jsonList = content.isEmpty ? [] : jsonDecode(content);
+    List<Word> wordList = jsonList.map((e) => Word.fromJson(e)).toList();
+
+    wordList.add(word);
+
+    await f.writeAsString(jsonEncode(wordList.map((w) => w.toJson()).toList()));
+    state = AsyncValue.data(wordList);
   }
 
   Future<void> replaceWordInJson(Word newWord) async {
@@ -74,7 +80,40 @@ class ImageStorageNotifier extends AsyncNotifier<List<Word>> {
     }
 
     await f.writeAsString(jsonEncode(wordList.map((w) => w.toJson()).toList()));
+
+    state = AsyncValue.data(wordList);
   }
+
+  Future<void> deleteWordCompletely(String id) async {
+    final f = await file;
+    final content = await f.readAsString();
+    List<dynamic> jsonList = content.isEmpty ? [] : jsonDecode(content);
+    List<Word> wordList = jsonList.map((e) => Word.fromJson(e)).toList();
+
+    final wordToDelete = wordList.firstWhere(
+          (w) => w.id == id,
+    );
+
+      // Delete local image that not from assets
+      if (wordToDelete.imgPath.isNotEmpty && !wordToDelete.imgPath.startsWith('assets/')) {
+        final imgFile = File(wordToDelete.imgPath);
+        if (await imgFile.exists()) {
+          try {
+            await imgFile.delete();
+            debugPrint("File gambar dihapus: ${wordToDelete.imgPath}");
+          } catch (e) {
+            debugPrint("Gagal menghapus file gambar: $e");
+          }
+        }
+      }
+
+      wordList.removeWhere((w) => w.id == id);
+
+      await f.writeAsString(jsonEncode(wordList.map((w) => w.toJson()).toList()));
+
+      state = AsyncValue.data(wordList);
+  }
+
 
   Future<bool> wordExists(String query) async {
     final words = state.value ?? [];

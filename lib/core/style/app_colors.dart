@@ -8,7 +8,7 @@ class AppColors {
 
   // Secondary & Supporting
   static const Color secondaryBg = Color(0xFFF9F1E9);
-  static const Color secondaryBorder = Color(0xFFBCBCBC);
+  static const Color secondaryBorder = Color(0xFFE1D7CC);
 
   // Aditional
   static const Color thirdBg = Color(0xFFC0B0A4);

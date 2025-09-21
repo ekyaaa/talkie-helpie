@@ -2,14 +2,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:talkie_helpie/core/models/word.dart';
 import '../services/image_card_storage_service.dart';
 
-// Notifier yang menyimpan keyword
+// Helper for searching words with keyboard
 class SearchKeywordNotifier extends Notifier<String> {
   @override
-  String build() => ''; // initial state
+  String build() => '';
 
-  // method untuk update state
   void setKeyword(String keyword) {
-    state = keyword; // gunakan parameter langsung
+    state = keyword;
   }
 }
 
@@ -17,6 +16,7 @@ final searchKeywordProvider = NotifierProvider<SearchKeywordNotifier, String>(
   SearchKeywordNotifier.new,
 );
 
+// Helper for provide 4 recommendation on keyboard
 final wordRecommendationProvider = FutureProvider<List<Word>>((ref) async {
   final keyword = ref.watch(searchKeywordProvider).toLowerCase();
   final wordsAsync = await ref.watch(imageStorageAsyncProvider.future);

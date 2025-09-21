@@ -1,9 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:talkie_helpie/core/services/selected_cards_service.dart';
 import 'package:talkie_helpie/core/style/app_colors.dart';
 import 'package:talkie_helpie/core/helper/card_color_picker.dart';
-
+import '../core/helper/truncate_word.dart';
 import 'notifier/content_widget_notifier.dart';
 import 'notifier/full_text_provider.dart';
 
@@ -12,10 +14,7 @@ class CardsLayout extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final double screenHeight = MediaQuery
-        .of(context)
-        .size
-        .height;
+    final double screenHeight = MediaQuery.of(context).size.height;
     final wordsAsync = ref.watch(selectedCardsAsyncProvider);
 
     return Container(
@@ -61,7 +60,9 @@ class CardsLayout extends ConsumerWidget {
 
               return GestureDetector(
                 onTap: () {
-                  ref.read(fullTextProvider.notifier).addWord(word.word, WordSeparator.space);
+                  ref
+                      .read(fullTextProvider.notifier)
+                      .addWord(word.word, WordSeparator.space);
                   ref.read(contentProvider.notifier).addWord(word);
                 },
                 child: Container(
@@ -79,7 +80,27 @@ class CardsLayout extends ConsumerWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       if (word.imgPath.isNotEmpty)
-                        Image.asset(word.imgPath, height: screenHeight * 0.1),
+                        if (word.imgPath.startsWith("assets/"))
+                          Image.asset(
+                            word.imgPath,
+                            fit: BoxFit.cover,
+                            height: screenHeight * 0.1,
+                          )
+                        else
+                          Builder(
+                            builder: (context) {
+                              final file = File(word.imgPath);
+
+                              if (file.existsSync()) {
+                                return Image.file(
+                                  file,
+                                  height: screenHeight * 0.1,
+                                );
+                              } else {
+                                return const Text("File tidak ditemukan");
+                              }
+                            },
+                          ),
                       Text(
                         truncateWord(word.word, 9),
                         style: TextStyle(fontSize: screenHeight * 0.03),
@@ -95,9 +116,4 @@ class CardsLayout extends ConsumerWidget {
       ),
     );
   }
-}
-
-String truncateWord(String word, int maxLength) {
-  if (word.length <= maxLength) return word;
-  return '${word.substring(0, maxLength)}...';
 }

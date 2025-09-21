@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -42,16 +44,37 @@ class RecommendationRow extends ConsumerWidget {
                         ? MainAxisAlignment.center
                         : MainAxisAlignment.center,
                     children: [
-                      recommendation.imgPath.isEmpty
-                          ? const SizedBox.shrink()
-                          : Image.asset(
-                              recommendation.imgPath,
-                              height: screenHeight * 0.05,
-                            ),
+                      if (recommendation.imgPath.isEmpty)
+                        const SizedBox.shrink()
+                      else if (recommendation.imgPath.startsWith("assets/"))
+                        Image.asset(
+                          recommendation.imgPath,
+                          fit: BoxFit.cover,
+                          height: screenHeight * 0.05,
+                        )
+                      else
+                        Builder(
+                          builder: (context) {
+                            final file = File(recommendation.imgPath);
+                            debugPrint("imgPath: ${recommendation.imgPath}");
+                            debugPrint("File exists? ${file.existsSync()}");
+
+                            if (file.existsSync()) {
+                              return Image.file(
+                                file,
+                                height: screenHeight * 0.05,
+                              );
+                            } else {
+                              return const Text("File tidak ditemukan");
+                            }
+                          },
+                        ),
+
                       if (recommendation.imgPath.isNotEmpty)
                         SizedBox(width: screenWidth * 0.017),
+
                       Text(
-                      truncateWord(recommendation.word, 9), // max 8 huruf,
+                        truncateWord(recommendation.word, 9),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(

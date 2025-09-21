@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-
-import '../../core/style/app_colors.dart';
+import 'package:talkie_helpie/core/style/app_colors.dart';
+import 'package:talkie_helpie/views/edit_image_database_screen.dart';
 
 void showSettingsModal(BuildContext context) {
   final double screenHeight = MediaQuery.of(context).size.height;
-  final double screenWidth = MediaQuery.of(context).size.width;
 
   showDialog(
     context: context,
@@ -27,7 +26,11 @@ void showSettingsModal(BuildContext context) {
                 mainAxisAlignment: MainAxisAlignment.center,
                 spacing: 10,
                 children: [
-                  Icon(Icons.settings, size: screenHeight * 0.09, color: AppColors.secondaryBg,),
+                  Icon(
+                    Icons.settings,
+                    size: screenHeight * 0.09,
+                    color: AppColors.secondaryBg,
+                  ),
                   Text(
                     'Pengaturan',
                     style: TextStyle(
@@ -41,7 +44,11 @@ void showSettingsModal(BuildContext context) {
               ),
               SizedBox(height: screenHeight * 0.04),
               _buildOptionButton(context, "Edit Database Gambar", () {
-                debugPrint("Option 1 ditekan");
+                Navigator.pop(context); // tutup modal dulu
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => EditImageDatabaseScreen()),
+                );
               }),
               SizedBox(height: screenHeight * 0.03),
               _buildOptionButton(context, "Export Database", () {
@@ -66,7 +73,6 @@ Widget _buildOptionButton(
   String title,
   VoidCallback onTap,
 ) {
-  final double screenHeight = MediaQuery.of(context).size.height;
   final double screenWidth = MediaQuery.of(context).size.width;
 
   return GestureDetector(
