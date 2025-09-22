@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:talkie_helpie/views/notifier/full_text_provider.dart';
@@ -81,10 +83,32 @@ class OutputRow extends ConsumerWidget {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Image.asset(
-                                      item.word!.imgPath,
-                                      height: screenHeight * 0.065,
-                                    ),
+                                    if (item.word!.imgPath.isEmpty)
+                                      const SizedBox.shrink()
+                                    else if (item.word!.imgPath.startsWith("assets/"))
+                                      Image.asset(
+                                        item.word!.imgPath,
+                                        fit: BoxFit.cover,
+                                        height: screenHeight * 0.065,
+                                      )
+                                    else
+                                      Builder(
+                                        builder: (context) {
+                                          final file = File(item.word!.imgPath);
+                                          debugPrint("imgPath: ${item.word!.imgPath}");
+                                          debugPrint("File exists? ${file.existsSync()}");
+
+                                          if (file.existsSync()) {
+                                            return Image.file(
+                                              file,
+                                              height: screenHeight * 0.065,
+                                            );
+                                          } else {
+                                            return const Text("File tidak ditemukan");
+                                          }
+                                        },
+                                      ),
+
                                     Text(
                                       item.word!.word,
                                       style: TextStyle(

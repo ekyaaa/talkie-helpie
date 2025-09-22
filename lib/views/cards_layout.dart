@@ -5,9 +5,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:talkie_helpie/core/services/selected_cards_service.dart';
 import 'package:talkie_helpie/core/style/app_colors.dart';
 import 'package:talkie_helpie/core/helper/card_color_picker.dart';
+import 'package:talkie_helpie/views/widgets/swap_selected_card_modal.dart';
 import '../core/helper/truncate_word.dart';
 import 'notifier/content_widget_notifier.dart';
 import 'notifier/full_text_provider.dart';
+import 'notifier/is_card_edit_notifier.dart';
 
 class CardsLayout extends ConsumerWidget {
   const CardsLayout({super.key});
@@ -16,9 +18,14 @@ class CardsLayout extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final double screenHeight = MediaQuery.of(context).size.height;
     final wordsAsync = ref.watch(selectedCardsAsyncProvider);
+    final isCardEdit = ref.watch(isCardEditProvider);
 
-    return Container(
-      decoration: const BoxDecoration(color: AppColors.secondaryBg),
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+      decoration: BoxDecoration(
+        color: isCardEdit ? AppColors.thirdBg : AppColors.secondaryBg,
+      ),
       child: wordsAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (err, stack) => Center(child: Text("Error: $err")),
@@ -34,7 +41,7 @@ class CardsLayout extends ConsumerWidget {
             itemBuilder: (context, index) {
               if (index == words.length) {
                 return GestureDetector(
-                  onTap: () => debugPrint("Custom item ditekan"),
+                  onTap: () => ref.read(isCardEditProvider.notifier).toggle(),
                   child: Container(
                     margin: const EdgeInsets.all(2),
                     decoration: BoxDecoration(
@@ -59,12 +66,16 @@ class CardsLayout extends ConsumerWidget {
               final word = words[index];
 
               return GestureDetector(
-                onTap: () {
-                  ref
-                      .read(fullTextProvider.notifier)
-                      .addWord(word.word, WordSeparator.space);
-                  ref.read(contentProvider.notifier).addWord(word);
-                },
+                onTap: isCardEdit
+                    ? () {
+                  swapSelectedCardModal(context, ref, word.id);
+                }
+                    : () {
+                        ref
+                            .read(fullTextProvider.notifier)
+                            .addWord(word.word, WordSeparator.space);
+                        ref.read(contentProvider.notifier).addWord(word);
+                      },
                 child: Container(
                   margin: const EdgeInsets.all(2),
                   decoration: BoxDecoration(

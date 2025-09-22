@@ -71,6 +71,29 @@ class SelectedCardsNotifier extends AsyncNotifier<List<Word>> {
     state = AsyncValue.data(wordList);
   }
 
+  Future<void> replaceWordById(Word newWord, String oldId) async {
+    final f = await file;
+    final content = await f.readAsString();
+    List<dynamic> jsonList = content.isEmpty ? [] : jsonDecode(content);
+    List<Word> wordList = jsonList.map((e) => Word.fromJson(e)).toList();
+
+    // cari berdasarkan id lama
+    final index = wordList.indexWhere((w) => w.id == oldId);
+
+    if (index != -1) {
+      // ganti dengan word baru
+      wordList[index] = newWord;
+    } else {
+      // kalau id lama tidak ditemukan, ya tambahkan saja
+      wordList.add(newWord);
+    }
+
+    await f.writeAsString(jsonEncode(wordList.map((w) => w.toJson()).toList()));
+
+    state = AsyncValue.data(wordList);
+  }
+
+
   Future<bool> wordExists(String query) async {
     final words = state.value ?? [];
 

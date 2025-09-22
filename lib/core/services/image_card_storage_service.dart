@@ -133,3 +133,19 @@ class ImageStorageNotifier extends AsyncNotifier<List<Word>> {
 
 final imageStorageAsyncProvider =
 AsyncNotifierProvider<ImageStorageNotifier, List<Word>>(ImageStorageNotifier.new);
+
+// Provider to filter words based on word.word
+final filteredWordsProvider = Provider.family<List<Word>, String>((ref, query) {
+  final asyncWords = ref.watch(imageStorageAsyncProvider);
+
+  return asyncWords.when(
+    data: (words) {
+      if (query.isEmpty) return words; // kalau query kosong, tampilkan semua
+      return words
+          .where((w) => w.word.toLowerCase().contains(query.toLowerCase()))
+          .toList();
+    },
+    loading: () => [],
+    error: (_, __) => [],
+  );
+});
