@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:talkie_helpie/core/style/app_colors.dart';
 import 'package:talkie_helpie/views/edit_image_database_screen.dart';
+import 'package:talkie_helpie/views/widgets/modals/zip_dialog.dart';
+
+import '../../../core/services/export_database.dart';
 
 void showSettingsModal(BuildContext context) {
   final double screenHeight = MediaQuery.of(context).size.height;
@@ -44,7 +48,7 @@ void showSettingsModal(BuildContext context) {
               ),
               SizedBox(height: screenHeight * 0.04),
               _buildOptionButton(context, "Edit Database Gambar", () {
-                Navigator.pop(context); // tutup modal dulu
+                Navigator.pop(context);
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => EditImageDatabaseScreen()),
@@ -52,11 +56,25 @@ void showSettingsModal(BuildContext context) {
               }),
               SizedBox(height: screenHeight * 0.03),
               _buildOptionButton(context, "Export Database", () {
-                debugPrint("Option 2 ditekan");
+                Navigator.pop(context); // tutup settings modal dulu
+
+                showDialog(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (_) => const ZipDialog(),
+                );
+
+                // Trigger proses export lewat provider
+                final container = ProviderScope.containerOf(context, listen: false);
+                container.read(zipProvider.notifier).exportFolderAsZip();
+              }),
+              SizedBox(height: screenHeight * 0.03),
+              _buildOptionButton(context, "Import Database", () {
+                debugPrint("Option 3 ditekan");
               }),
               SizedBox(height: screenHeight * 0.03),
               _buildOptionButton(context, "Keluar Aplikasi", () {
-                debugPrint("Option 3 ditekan");
+                debugPrint("Option 4 ditekan");
               }),
               SizedBox(height: screenHeight * 0.03),
             ],

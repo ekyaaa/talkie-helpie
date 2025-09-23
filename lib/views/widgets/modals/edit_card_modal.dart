@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:talkie_helpie/core/style/app_colors.dart';
-import '../../core/models/word.dart';
-import '../notifier/edit_card_notifier.dart';
-import 'helper/card_preview.dart';
-import 'helper/edit_word_input.dart';
-import 'helper/edit_wordtype_dropdown.dart';
-import 'helper/input_helper.dart';
+import '../../../core/models/word.dart';
+import '../../notifier/edit_card_notifier.dart';
+import '../helper/card_preview.dart';
+import '../helper/edit_word_input.dart';
+import '../helper/edit_wordtype_dropdown.dart';
+import '../helper/input_helper.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'helper/pick_and_crop_image_helper.dart';
-import 'helper/save_update_helper.dart';
+import '../helper/pick_and_crop_image_helper.dart';
+import '../helper/save_update_helper.dart';
 
 // Helper for create or edit card modal
 void editCardModal(BuildContext context, Word? word, WidgetRef ref, bool canDelete) {

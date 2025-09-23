@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:talkie_helpie/core/style/app_colors.dart';
-import 'package:talkie_helpie/views/widgets/edit_card_modal.dart';
+import 'package:talkie_helpie/views/widgets/modals/edit_card_modal.dart';
 import '../core/helper/card_color_picker.dart';
 import '../core/helper/truncate_word.dart';
 import '../core/services/image_card_storage_service.dart';

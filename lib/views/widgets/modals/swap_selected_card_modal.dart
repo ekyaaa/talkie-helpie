@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:talkie_helpie/core/style/app_colors.dart';
-import '../../core/helper/truncate_word.dart';
-import '../../core/helper/card_color_picker.dart';
-import '../../core/services/image_card_storage_service.dart';
-import '../../core/services/selected_cards_service.dart';
+import '../../../core/helper/truncate_word.dart';
+import '../../../core/helper/card_color_picker.dart';
+import '../../../core/services/image_card_storage_service.dart';
+import '../../../core/services/selected_cards_service.dart';
 
 final searchQueryProvider = StateProvider<String>((ref) => '');
 

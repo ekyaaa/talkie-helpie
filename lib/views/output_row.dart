@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:talkie_helpie/views/notifier/full_text_provider.dart';
-import 'package:talkie_helpie/views/widgets/settings_modal.dart';
+import 'package:talkie_helpie/views/widgets/modals/settings_modal.dart';
 import '../core/style/app_colors.dart';
 import 'notifier/content_widget_notifier.dart';
 import 'notifier/type_notifier.dart';

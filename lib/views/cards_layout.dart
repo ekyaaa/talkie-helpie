@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:talkie_helpie/core/services/selected_cards_service.dart';
 import 'package:talkie_helpie/core/style/app_colors.dart';
 import 'package:talkie_helpie/core/helper/card_color_picker.dart';
-import 'package:talkie_helpie/views/widgets/swap_selected_card_modal.dart';
+import 'package:talkie_helpie/views/widgets/modals/swap_selected_card_modal.dart';
 import '../core/helper/truncate_word.dart';
 import 'notifier/content_widget_notifier.dart';
 import 'notifier/full_text_provider.dart';
