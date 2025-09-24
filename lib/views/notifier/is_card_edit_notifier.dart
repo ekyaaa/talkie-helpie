@@ -10,4 +10,4 @@ class IsCardEdit extends Notifier<bool> {
 
 // Provider
 final isCardEditProvider =
-NotifierProvider.autoDispose<IsCardEdit, bool>(IsCardEdit.new);
+NotifierProvider<IsCardEdit, bool>(IsCardEdit.new);
