@@ -8,7 +8,7 @@ import '../../notifier/keyboard_state.dart';
 class KeyButton extends ConsumerWidget {
   final KeyboardMode mode;
   final VoidCallback toggleMode;
-  final Color textColor; // <-- tambahkan
+  final Color textColor;
 
   const KeyButton(this.mode, {required this.toggleMode, this.textColor = AppColors.primaryFont, super.key});
 
@@ -44,7 +44,7 @@ class KeyButton extends ConsumerWidget {
           if (leftWidget != null) leftWidget,
           ...keys.map(
             (key) => Padding(
-              padding: const EdgeInsets.all(2.0),
+              padding: EdgeInsets.all(screenHeight* 0.005),
               child: SizedBox(
                 width: keyWidth,
                 height: keyHeight,
@@ -98,7 +98,7 @@ class KeyButton extends ConsumerWidget {
             ),
           ),
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: screenHeight * 0.005),
         // Second Row
         buildRow(
           row2,
@@ -122,7 +122,7 @@ class KeyButton extends ConsumerWidget {
             ),
           ),
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: screenHeight * 0.005),
         // Third Row
         buildRow(
           row3,
@@ -188,7 +188,7 @@ class KeyButton extends ConsumerWidget {
             ),
           ),
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: screenHeight * 0.005),
         // Fourth Row
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -213,7 +213,7 @@ class KeyButton extends ConsumerWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(2.0),
+              padding: EdgeInsets.all(screenHeight *0.005),
               child: SizedBox(
                 width: keyWidth * 5,
                 height: keyHeight,
@@ -238,7 +238,7 @@ class KeyButton extends ConsumerWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(2.0),
+              padding: EdgeInsets.all(screenHeight*0.005),
               child: SizedBox(
                 width: keyWidth,
                 height: keyHeight,
@@ -258,7 +258,7 @@ class KeyButton extends ConsumerWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(2.0),
+              padding: EdgeInsets.all(screenHeight*0.005),
               child: SizedBox(
                 width: keyWidth * 1.3,
                 height: keyHeight,
@@ -354,3 +354,10 @@ const List<String> keySymbol2 = [
   '^',
 ];
 const List<String> keySymbol3 = ['&', '-', '+', '=', '/', ';', ':', '!', '?'];
+
+// Helper for Height & Width Screen
+double screenHeight(BuildContext context) =>
+    MediaQuery.of(context).size.height;
+
+double screenWidth(BuildContext context) =>
+    MediaQuery.of(context).size.width;

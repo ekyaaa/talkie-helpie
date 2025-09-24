@@ -19,78 +19,84 @@ class RecommendationRow extends ConsumerWidget {
 
     return recommendationsAsync.when(
       data: (recommendations) {
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: recommendations.map((recommendation) {
-            return Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: SizedBox(
-                width: screenWidth * 0.23,
-                height: screenHeight * 0.09,
-                child: ElevatedButton(
-                  onPressed: () {
-                    ref
-                        .read(editorProvider.notifier)
-                        .addFromRecommendation(recommendation.word);
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+        return SizedBox(
+          height: screenHeight * 0.1,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: recommendations.map((recommendation) {
+              return Padding(
+                padding: EdgeInsets.all(screenHeight * 0.005),
+                child: SizedBox(
+                  width: screenWidth * 0.23,
+                  height: screenHeight * 0.1,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      ref
+                          .read(editorProvider.notifier)
+                          .addFromRecommendation(recommendation.word);
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: recommendation.imgPath.isEmpty
+                          ? MainAxisAlignment.center
+                          : MainAxisAlignment.center,
+                      children: [
+                        if (recommendation.imgPath.isEmpty)
+                          const SizedBox.shrink()
+                        else if (recommendation.imgPath.startsWith("assets/"))
+                          Image.asset(
+                            recommendation.imgPath,
+                            fit: BoxFit.cover,
+                            height: screenHeight * 0.05,
+                          )
+                        else
+                          Builder(
+                            builder: (context) {
+                              final file = File(recommendation.imgPath);
+                              debugPrint("imgPath: ${recommendation.imgPath}");
+                              debugPrint("File exists? ${file.existsSync()}");
+
+                              if (file.existsSync()) {
+                                return Image.file(
+                                  file,
+                                  height: screenHeight * 0.05,
+                                );
+                              } else {
+                                return const Text("File tidak ditemukan");
+                              }
+                            },
+                          ),
+
+                        if (recommendation.imgPath.isNotEmpty)
+                          SizedBox(width: screenWidth * 0.017),
+
+                        Text(
+                          truncateWord(recommendation.word, 9),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontSize: keyWidth * 0.25,
+                            color: AppColors.primaryFont,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  child: Row(
-                    mainAxisAlignment: recommendation.imgPath.isEmpty
-                        ? MainAxisAlignment.center
-                        : MainAxisAlignment.center,
-                    children: [
-                      if (recommendation.imgPath.isEmpty)
-                        const SizedBox.shrink()
-                      else if (recommendation.imgPath.startsWith("assets/"))
-                        Image.asset(
-                          recommendation.imgPath,
-                          fit: BoxFit.cover,
-                          height: screenHeight * 0.05,
-                        )
-                      else
-                        Builder(
-                          builder: (context) {
-                            final file = File(recommendation.imgPath);
-                            debugPrint("imgPath: ${recommendation.imgPath}");
-                            debugPrint("File exists? ${file.existsSync()}");
-
-                            if (file.existsSync()) {
-                              return Image.file(
-                                file,
-                                height: screenHeight * 0.05,
-                              );
-                            } else {
-                              return const Text("File tidak ditemukan");
-                            }
-                          },
-                        ),
-
-                      if (recommendation.imgPath.isNotEmpty)
-                        SizedBox(width: screenWidth * 0.017),
-
-                      Text(
-                        truncateWord(recommendation.word, 9),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontSize: keyWidth * 0.25,
-                          color: AppColors.primaryFont,
-                        ),
-                      ),
-                    ],
-                  ),
                 ),
-              ),
-            );
-          }).toList(),
+              );
+            }).toList(),
+          ),
         );
       },
-      loading: () => const CircularProgressIndicator(),
+      loading: () => SizedBox(
+        height: screenHeight * 0.1,
+        child: const CircularProgressIndicator(),
+      ),
       error: (err, stack) => Text('Error: $err'),
     );
   }

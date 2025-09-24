@@ -13,24 +13,27 @@ final searchQueryProvider = StateProvider<String>((ref) => '');
 void swapSelectedCardModal(BuildContext context, WidgetRef ref, String wordId) {
   final screenHeight = MediaQuery.of(context).size.height;
 
-  showDialog(
+  showModalBottomSheet(
     context: context,
-    barrierDismissible: true,
+    isScrollControlled: true, // biar bisa tinggi lebih fleksibel
+    backgroundColor: AppColors.secondaryBg,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+    ),
     builder: (context) {
-      return Dialog(
-        backgroundColor: AppColors.secondaryBg,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
+      return Padding(
+        padding: EdgeInsets.only(
+          left: 24,
+          right: 24,
+          top: 16,
+          bottom: MediaQuery.of(context).viewInsets.bottom + 16, // biar ga ketutup keyboard
         ),
-        insetPadding: const EdgeInsets.all(24), // biar gak mepet tepi layar
         child: Consumer(
           builder: (context, ref, _) {
             final searchQuery = ref.watch(searchQueryProvider);
             final filteredWords = ref.watch(filteredWordsProvider(searchQuery));
 
-            return Container(
-              width: MediaQuery.of(context).size.width * 0.6,
-              padding: const EdgeInsets.all(16),
+            return SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -45,7 +48,7 @@ void swapSelectedCardModal(BuildContext context, WidgetRef ref, String wordId) {
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                         borderSide: const BorderSide(
-                          color: AppColors.primaryBg, // warna border ketika focus
+                          color: AppColors.primaryBg,
                           width: 2,
                         ),
                       ),
@@ -60,7 +63,7 @@ void swapSelectedCardModal(BuildContext context, WidgetRef ref, String wordId) {
 
                   // GridView for cards
                   SizedBox(
-                    height: screenHeight * 0.4,
+                    height: screenHeight * 0.5,
                     child: GridView.builder(
                       gridDelegate:
                       const SliverGridDelegateWithFixedCrossAxisCount(
@@ -80,14 +83,17 @@ void swapSelectedCardModal(BuildContext context, WidgetRef ref, String wordId) {
                               builder: (context) {
                                 return AlertDialog(
                                   title: const Text("Konfirmasi"),
-                                  content: const Text("Apakah kamu yakin ingin mengganti kartu ini?"),
+                                  content: const Text(
+                                      "Apakah kamu yakin ingin mengganti kartu ini?"),
                                   actions: [
                                     TextButton(
-                                      onPressed: () => Navigator.pop(context, false),
+                                      onPressed: () =>
+                                          Navigator.pop(context, false),
                                       child: const Text("Batal"),
                                     ),
                                     ElevatedButton(
-                                      onPressed: () => Navigator.pop(context, true),
+                                      onPressed: () =>
+                                          Navigator.pop(context, true),
                                       child: const Text("Ya, Ganti"),
                                     ),
                                   ],
@@ -100,10 +106,9 @@ void swapSelectedCardModal(BuildContext context, WidgetRef ref, String wordId) {
                                   .read(selectedCardsAsyncProvider.notifier)
                                   .replaceWordById(word, wordId);
 
-                              Navigator.pop(context); // tutup modal utama setelah ganti
+                              Navigator.pop(context); // tutup bottom sheet
                             }
                           },
-
                           child: Container(
                             margin: const EdgeInsets.all(2),
                             decoration: BoxDecoration(
@@ -161,3 +166,4 @@ void swapSelectedCardModal(BuildContext context, WidgetRef ref, String wordId) {
     },
   );
 }
+

@@ -6,7 +6,7 @@ import 'package:talkie_helpie/views/home_layout.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
   // Set the orientations to landscape
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.landscapeLeft,
@@ -34,13 +34,7 @@ class MyApp extends StatelessWidget {
           selectionHandleColor: AppColors.primaryFont,
         ),
       ),
-      home: SafeArea(
-        top: false,
-        bottom: false,
-        left: true,
-        right: true,
-        child: const HomeLayout(),
-      ),
+      home: const HomeLayout(),
     );
   }
 }

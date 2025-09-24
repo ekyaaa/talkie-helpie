@@ -14,7 +14,7 @@ Widget rowInput(BuildContext context, String label, Widget child) {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         SizedBox(
-          width: screenWidth * 0.1,
+          width: screenWidth * 0.11,
           child: Text(
             label,
             style: TextStyle(fontSize: 20, color: AppColors.secondaryBg),

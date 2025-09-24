@@ -38,7 +38,7 @@ class OutputRow extends ConsumerWidget {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   minimumSize: Size(screenHeight * 0.12, screenHeight * 0.12),
-                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  padding: EdgeInsets.symmetric(vertical: screenHeight * 0.01),
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -51,7 +51,11 @@ class OutputRow extends ConsumerWidget {
                     SizedBox(height: screenHeight * 0.0125),
                     Text(
                       'Bicara',
-                      style: TextStyle(fontSize: screenHeight * 0.02),
+                      style: TextStyle(
+                        fontSize: screenHeight * 0.02,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.primaryBg
+                      ),
                     ),
                   ],
                 ),
@@ -85,7 +89,9 @@ class OutputRow extends ConsumerWidget {
                                   children: [
                                     if (item.word!.imgPath.isEmpty)
                                       const SizedBox.shrink()
-                                    else if (item.word!.imgPath.startsWith("assets/"))
+                                    else if (item.word!.imgPath.startsWith(
+                                      "assets/",
+                                    ))
                                       Image.asset(
                                         item.word!.imgPath,
                                         fit: BoxFit.cover,
@@ -95,8 +101,6 @@ class OutputRow extends ConsumerWidget {
                                       Builder(
                                         builder: (context) {
                                           final file = File(item.word!.imgPath);
-                                          debugPrint("imgPath: ${item.word!.imgPath}");
-                                          debugPrint("File exists? ${file.existsSync()}");
 
                                           if (file.existsSync()) {
                                             return Image.file(
@@ -104,7 +108,9 @@ class OutputRow extends ConsumerWidget {
                                               height: screenHeight * 0.065,
                                             );
                                           } else {
-                                            return const Text("File tidak ditemukan");
+                                            return const Text(
+                                              "File tidak ditemukan",
+                                            );
                                           }
                                         },
                                       ),
@@ -112,7 +118,8 @@ class OutputRow extends ConsumerWidget {
                                     Text(
                                       item.word!.word,
                                       style: TextStyle(
-                                        fontSize: screenHeight * 0.025,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: screenHeight * 0.02,
                                       ),
                                     ),
                                   ],
@@ -136,8 +143,8 @@ class OutputRow extends ConsumerWidget {
                                 padding: const EdgeInsets.only(left: 30),
                                 child: Text(
                                   item.text!,
-                                  style: const TextStyle(
-                                    fontSize: 16,
+                                  style: TextStyle(
+                                    fontSize: screenHeight * 0.005,
                                     color: Colors.black87,
                                   ),
                                 ),
@@ -166,7 +173,7 @@ class OutputRow extends ConsumerWidget {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   minimumSize: Size(screenHeight * 0.12, screenHeight * 0.12),
-                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  padding: EdgeInsets.symmetric(vertical: screenHeight * 0.01),
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -181,6 +188,7 @@ class OutputRow extends ConsumerWidget {
                       'Bersihkan',
                       style: TextStyle(
                         fontSize: screenHeight * 0.02,
+                        fontWeight: FontWeight.bold,
                         color: AppColors.primaryFont,
                       ),
                     ),
@@ -202,7 +210,7 @@ class OutputRow extends ConsumerWidget {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   minimumSize: Size(screenHeight * 0.12, screenHeight * 0.12),
-                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  padding: EdgeInsets.symmetric(vertical: screenHeight * 0.01),
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -232,6 +240,7 @@ class OutputRow extends ConsumerWidget {
                           : 'Kartu',
                       style: TextStyle(
                         fontSize: screenHeight * 0.02,
+                        fontWeight: FontWeight.bold,
                         color: AppColors.primaryFont,
                       ),
                     ),
@@ -250,7 +259,7 @@ class OutputRow extends ConsumerWidget {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   minimumSize: Size(screenHeight * 0.12, screenHeight * 0.12),
-                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  padding: EdgeInsets.symmetric(vertical: screenHeight * 0.01),
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -260,11 +269,12 @@ class OutputRow extends ConsumerWidget {
                       'assets/icons/pengaturan.png',
                       height: screenHeight * 0.05,
                     ),
-                    SizedBox(height: screenHeight * 0.0125),
+                    SizedBox(height: screenHeight * 0.005),
                     Text(
                       'Pengaturan',
                       style: TextStyle(
                         fontSize: screenHeight * 0.02,
+                        fontWeight: FontWeight.bold,
                         color: AppColors.primaryFont,
                       ),
                     ),

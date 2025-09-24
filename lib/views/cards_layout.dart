@@ -47,15 +47,25 @@ class CardsLayout extends ConsumerWidget {
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(8),
-                      border: Border.all(color: Colors.black54, width: 4),
+                      border: Border.all(
+                        color: isCardEdit ? Colors.green : Colors.black54,
+                        width: 4,
+                      ),
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.edit, size: screenHeight * 0.1),
+                        Icon(
+                          Icons.edit,
+                          size: screenHeight * 0.09,
+                          color: isCardEdit ? Colors.green : Colors.black54,
+                        ),
                         Text(
                           'Edit',
-                          style: TextStyle(fontSize: screenHeight * 0.03),
+                          style: TextStyle(
+                            fontSize: screenHeight * 0.03,
+                            color: isCardEdit ? Colors.green : Colors.black54,
+                          ),
                         ),
                       ],
                     ),
@@ -68,8 +78,8 @@ class CardsLayout extends ConsumerWidget {
               return GestureDetector(
                 onTap: isCardEdit
                     ? () {
-                  swapSelectedCardModal(context, ref, word.id);
-                }
+                        swapSelectedCardModal(context, ref, word.id);
+                      }
                     : () {
                         ref
                             .read(fullTextProvider.notifier)
@@ -95,7 +105,7 @@ class CardsLayout extends ConsumerWidget {
                           Image.asset(
                             word.imgPath,
                             fit: BoxFit.cover,
-                            height: screenHeight * 0.1,
+                            height: screenHeight * 0.09,
                           )
                         else
                           Builder(
@@ -105,7 +115,7 @@ class CardsLayout extends ConsumerWidget {
                               if (file.existsSync()) {
                                 return Image.file(
                                   file,
-                                  height: screenHeight * 0.1,
+                                  height: screenHeight * 0.09,
                                 );
                               } else {
                                 return const Text("File tidak ditemukan");

@@ -26,7 +26,6 @@ class _EditWordInputState extends ConsumerState<EditWordInput> {
 
   @override
   Widget build(BuildContext context) {
-    // sinkronkan kalau ada perubahan dari provider
     ref.listen<Word>(previewWordProvider(widget.word), (prev, next) {
       if (_controller.text != next.word) {
         _controller.text = next.word;
@@ -39,6 +38,7 @@ class _EditWordInputState extends ConsumerState<EditWordInput> {
         hintText: "Masukkan teks",
         hintStyle: TextStyle(color: Colors.grey.shade500),
         filled: true,
+
         fillColor: AppColors.secondaryBg,
         contentPadding: const EdgeInsets.symmetric(
             vertical: 12, horizontal: 12),

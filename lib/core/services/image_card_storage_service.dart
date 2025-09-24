@@ -114,7 +114,6 @@ class ImageStorageNotifier extends AsyncNotifier<List<Word>> {
       state = AsyncValue.data(wordList);
   }
 
-
   Future<bool> wordExists(String query) async {
     final words = state.value ?? [];
 

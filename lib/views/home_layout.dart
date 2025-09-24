@@ -17,8 +17,10 @@ class HomeLayout extends ConsumerWidget {
     final double screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Column(
         children: [
+          // Output sentence
           AnimatedSwitcher(
             duration: const Duration(milliseconds: 200),
             transitionBuilder: (child, animation) {
@@ -37,6 +39,8 @@ class HomeLayout extends ConsumerWidget {
                   )
                 : OutputRow(),
           ),
+
+          // Keyboard or Cards input
           Expanded(
             child: AnimatedSwitcher(
               duration: const Duration(milliseconds: 500),

@@ -28,13 +28,13 @@ class KeyboardLayout extends ConsumerWidget {
         children: [
           // Current Input
           const CurrentTextReview(),
-          SizedBox(height: screenHeight * 0.01),
+          SizedBox(height: screenHeight * 0.02),
           // Words recomendation
           const RecommendationRow(),
           SizedBox(height: screenHeight * 0.02),
           // Key Buttons
           KeyButton(mode, toggleMode: toggleMode),
-          SizedBox(height: screenHeight * 0.05),
+          SizedBox(height: screenHeight * 0.075),
         ],
       ),
     );
