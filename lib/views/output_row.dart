@@ -144,7 +144,7 @@ class OutputRow extends ConsumerWidget {
                                 child: Text(
                                   item.text!,
                                   style: TextStyle(
-                                    fontSize: screenHeight * 0.005,
+                                    fontSize: screenHeight * 0.05,
                                     color: Colors.black87,
                                   ),
                                 ),
